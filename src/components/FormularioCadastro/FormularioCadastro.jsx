@@ -5,8 +5,11 @@ import DadosPessoais from './DadosPessoais';
 import DadosUsuario from './DadosUsuario';
 
 function FormularioCadastro({ aoEnviar, validacoes }) {
+
     const [etapaAtual, setEtapaAtual] = useState(0);
+
     const [dadosColetados, setDados] = useState({});
+
     useEffect(() => {
         if (etapaAtual === formularios.length - 1) {
             aoEnviar(dadosColetados);

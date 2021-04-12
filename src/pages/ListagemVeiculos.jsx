@@ -20,12 +20,12 @@ function ListagemVeiculos() {
     console.log(veiculos);
 
     return (
-        <>
+        <div>
             <Typography variant="h3" align="center" component="h1">Listagem de Veículos</Typography>
             <div style={{ height: 300, width: '100%' }}>
-                <DataGrid hideFooterPagination rows={veiculos} columns={colunas} />
+                <DataGrid rows={veiculos} columns={colunas} />
             </div>
-        </>
+        </div>
     );
 }
 
