@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import VeiculoService from '../services/VeiculoService'
+import MarcaService from '../services/VeiculoService'
 import { DataGrid } from '@material-ui/data-grid';
 import { Typography } from '@material-ui/core';
 
@@ -12,7 +12,7 @@ const colunas = [
 function ListagemVeiculos() {
     const [veiculos, setVeiculos] = useState([]);
     useEffect(() => {
-        VeiculoService.listar()
+        MarcaService.listar()
             .then(veiculos => setVeiculos(veiculos));
     }, []);
 

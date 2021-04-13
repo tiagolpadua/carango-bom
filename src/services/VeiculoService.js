@@ -1,5 +1,5 @@
-const VeiculoService = {
-  cadastrar() {
+const MarcaService = {
+  cadastrar(nome) {
     throw new Error("Não implementado");
   },
   listar() {
@@ -7,25 +7,15 @@ const VeiculoService = {
       resolve([
         {
           id: 1,
-          marca: "GM",
-          modelo: "CORSA",
-          valor: 15000
+          nome: "GM"
         },
         {
           id: 2,
-          marca: "FIAT",
-          modelo: "STRADA",
-          valor: 18000
-        },
-        {
-          id: 3,
-          marca: "HONDA",
-          modelo: "CIVIC",
-          valor: 25000
-        },
+          nome: "FIAT"
+        }
       ]);
     })
   }
 };
 
-export default VeiculoService;
+export default MarcaService;

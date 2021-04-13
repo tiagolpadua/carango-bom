@@ -1,11 +1,11 @@
 export const UsuarioService = {
-  login({ login, senha }) {
-    return fetch("https://twitelum-api.herokuapp.com/login", {
+  login({ usuario, senha }) {
+    return fetch("https://???.herokuapp.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ login, senha }),
+      body: JSON.stringify({ usuario, senha }),
     })
       .then(async (responseDoServer) => {
         if (!responseDoServer.ok) {
