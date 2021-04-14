@@ -1,6 +1,12 @@
-import { AppBar, Container, CssBaseline, Divider, Drawer, List, ListItem, ListItemText, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { Button, Container, CssBaseline, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
+import Menu from './components/Menu';
+import Topbar from './components/Topbar';
+import ErrorMessage from './components/ErrorMessage';
+import UsuarioLogado from './contexts/UsuarioLogado';
 import CadastroMarca from './pages/CadastroMarca';
 import CadastroUsuario from './pages/CadastroUsuario';
 import CadastroVeiculo from './pages/CadastroVeiculo';
@@ -8,23 +14,22 @@ import Dashboard from './pages/Dashboard';
 import ListagemVeiculos from './pages/ListagemVeiculos';
 import Login from './pages/Login';
 import Pagina404 from './pages/Pagina404';
+import { createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import { ptBR } from '@material-ui/core/locale';
+import MensagemErro from './contexts/MensagemErro';
 
-const drawerWidth = 240;
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blue[900],
+    }
+  },
+}, ptBR);
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -37,91 +42,55 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 
+  const [usuarioLogado, setUsuarioLogado] = useState();
+  const [mensagemErro, setMensagemErro] = useState();
+
   const classes = useStyles();
 
   return (
-    <Router>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Carango Bom
-          </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          anchor="left"
-        >
-          <div className={classes.toolbar} />
-          <Divider />
-          <List>
-            {[
-              ['/login', 'Entrar'],
-              ['/dashboard', 'Dashboard'],
-              ['/', 'Lista de Veículos'],
-              ['/cadastro-veiculo', 'Cadastro de Veículo'],
-              ['/cadastro-marca', 'Cadastro de Marca']
-            ].map((item, index) => (
-              <ListItem button component={Link} to={item[0]} key={item[1]}>
-                <ListItemText primary={item[1]} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {[['/logoff', 'Sair']].map((item, index) => (
-              <ListItem button component={Link} to={item[0]} key={item[1]}>
-                <ListItemText primary={item[1]} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container component="article" maxWidth="sm">
-            <Switch>
-              <Route exact path="/">
-                <ListagemVeiculos></ListagemVeiculos>
-              </Route>
-              <Route path="/login">
-                <Login></Login>
-              </Route>
-              <Route path="/dashboard">
-                <Dashboard></Dashboard>
-              </Route>
-              <Route path="/cadastro-usuario">
-                <CadastroUsuario></CadastroUsuario>
-              </Route>
-              <Route path="/cadastro-veiculo">
-                <CadastroVeiculo></CadastroVeiculo>
-              </Route>
-              <Route path="/cadastro-marca">
-                <CadastroMarca></CadastroMarca>
-              </Route>
-              <Route>
-                <Pagina404></Pagina404>
-              </Route>
-            </Switch>
-          </Container>
-        </main>
-      </div>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <UsuarioLogado.Provider value={{ usuarioLogado, setUsuarioLogado }}>
+        <MensagemErro.Provider value={{ mensagemErro, setMensagemErro }}>
+          <Router>
+            <div className={classes.root}>
+              <CssBaseline />
+              <Topbar></Topbar>
+              <Menu></Menu>
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Container component="article" maxWidth="md">
+                  <Switch>
+                    <Route exact path="/">
+                      <ListagemVeiculos></ListagemVeiculos>
+                    </Route>
+                    <Route path="/login">
+                      <Login></Login>
+                    </Route>
+                    <Route path="/dashboard">
+                      <Dashboard></Dashboard>
+                    </Route>
+                    <Route path="/cadastro-usuario">
+                      <CadastroUsuario></CadastroUsuario>
+                    </Route>
+                    <Route path="/cadastro-veiculo">
+                      <CadastroVeiculo></CadastroVeiculo>
+                    </Route>
+                    <Route path="/cadastro-marca">
+                      <CadastroMarca></CadastroMarca>
+                    </Route>
+                    <Route>
+                      <Pagina404></Pagina404>
+                    </Route>
+                  </Switch>
+                  <ErrorMessage></ErrorMessage>
+                </Container>
+              </main>
+            </div>
+          </Router>
+        </MensagemErro.Provider>
+      </UsuarioLogado.Provider>
+    </ThemeProvider>
   );
 }
 
 export default App;
-
-/* <Container component="article" maxWidth="sm">
-  <Login></Login>
-  <Dashboard></Dashboard>
-  <CadastroUsuario></CadastroUsuario>
-  <ListagemVeiculos></ListagemVeiculos>
-  <CadastroVeiculo></CadastroVeiculo>
-  <CadastroMarca></CadastroMarca>
-</Container> */

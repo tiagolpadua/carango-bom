@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MarcaService from '../services/MarcaService'
+import MarcaService from '../services/VeiculoService'
 import { DataGrid } from '@material-ui/data-grid';
 import { Typography } from '@material-ui/core';
 
@@ -18,11 +18,8 @@ function Dashboard() {
     }, []);
 
     return (
-        <div>
-            <Typography variant="h3" align="center" component="h1">Dashboard</Typography>
-            <div style={{ height: 300, width: '100%' }}>
-                <DataGrid rows={dados} columns={colunas} />
-            </div>
+        <div style={{ height: 300, width: '100%' }}>
+            <DataGrid rows={dados} columns={colunas} />
         </div>
     );
 }

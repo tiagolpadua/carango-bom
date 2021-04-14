@@ -1,20 +1,30 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import UsuarioLogado from '../contexts/UsuarioLogado';
 import { UsuarioService } from '../services/UsuarioService';
+import { useHistory } from "react-router-dom";
+import MensagemErro from '../contexts/MensagemErro';
 
 function Login() {
 
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
 
+    const { setUsuarioLogado } = useContext(UsuarioLogado);
+    const { setMensagemErro } = useContext(MensagemErro);
+
+    const history = useHistory();
+
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             UsuarioService.login({ usuario, senha })
-                .then(() => {
-                    throw new Error("Não implementado");
+                .then(({ usuario, jwt }) => {
+                    setUsuarioLogado(usuario);
+                    window.sessionStorage.setItem('jwt', jwt);
+                    history.push("/");
                 })
-
+                .catch(erro => setMensagemErro(erro));
         }}>
             <TextField
                 value={usuario}

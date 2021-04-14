@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import MarcaService from '../services/VeiculoService'
 import { DataGrid } from '@material-ui/data-grid';
 import { Typography } from '@material-ui/core';
+import VeiculoService from '../services/VeiculoService';
 
 const colunas = [
-    { field: 'marca', headerName: 'Marca' },
-    { field: 'modelo', headerName: 'Modelo' },
-    { field: 'valor', headerName: 'Valor' },
+    { field: 'marca', headerName: 'Marca', width: 200 },
+    { field: 'modelo', headerName: 'Modelo', width: 200 },
+    { field: 'valor', headerName: 'Valor', width: 200 },
 ];
 
 function ListagemVeiculos() {
     const [veiculos, setVeiculos] = useState([]);
+
     useEffect(() => {
-        MarcaService.listar()
-            .then(veiculos => setVeiculos(veiculos));
+        VeiculoService.listar()
+            .then(veiculos => setVeiculos(
+                veiculos.map(v => (
+                    {
+                        ...v,
+                        valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                    }
+                ))
+            ))
     }, []);
 
-
-    console.log(veiculos);
-
     return (
-        <div>
-            <Typography variant="h3" align="center" component="h1">Listagem de Veículos</Typography>
-            <div style={{ height: 300, width: '100%' }}>
-                <DataGrid rows={veiculos} columns={colunas} />
-            </div>
+        <div style={{ height: 300, width: '100%' }}>
+            <DataGrid rows={veiculos} columns={colunas} />
         </div>
     );
 }
