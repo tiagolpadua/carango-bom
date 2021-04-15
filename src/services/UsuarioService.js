@@ -1,4 +1,4 @@
-export const UsuarioService = {
+const UsuarioService = {
   login({ usuario, senha }) {
     return new Promise((resolve, reject) => {
       if (usuario === 'tiago' && senha === '123') {
@@ -34,10 +34,20 @@ export const UsuarioService = {
     //     throw new Error("Token not found");
     //   });
   },
-  logoff() {
-    throw new Error("Não implementado");
+  cadastrar({ usuario, senha }) {
+    return new Promise((resolve, reject) => {
+      if (usuario === 'tiago' && senha === '11111') {
+        resolve('Usuário cadastrado com sucesso!');
+      } else {
+        reject('Erro ao cadastrar usuário');
+      }
+    });
   },
-  cadastrar() {
-    throw new Error("Não implementado");
+  listar() {
+    return new Promise((resolve, reject) => {
+      resolve([{ id: 1, name: 'tiago' }, { id: 2, name: 'bruno' }, { id: 3, name: 'paulo' }]);
+    });
   }
 };
+
+export default UsuarioService;

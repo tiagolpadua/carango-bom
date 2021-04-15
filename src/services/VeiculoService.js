@@ -1,11 +1,17 @@
 const VeiculoService = {
   dashboard() {
     return new Promise(resolve => {
-      resolve([]);
+      resolve([
+        { marca: 'GM', valor: "R$ 50.000,00" },
+        { marca: 'FIAT', valor: "R$ 15.000,00" },
+        { marca: 'RENAULT', valor: "R$ 8.000,00" },
+      ]);
     });
   },
-  cadastrar() {
-    throw new Error("Não implementado");
+  cadastrar({ marca, modelo, ano, valor }) {
+    return new Promise(resolve => {
+      resolve('Veículo cadastrado com sucesso!');
+    });
   },
   listar() {
     return new Promise(resolve => {

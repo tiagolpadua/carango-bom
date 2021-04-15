@@ -1,6 +1,8 @@
 const MarcaService = {
   cadastrar(nome) {
-    throw new Error("Não implementado");
+    return new Promise(resolve => {
+      resolve('Marca cadastrada com sucesso!');
+    })
   },
   listar() {
     return new Promise(resolve => {
@@ -14,7 +16,7 @@ const MarcaService = {
           nome: "FIAT"
         }
       ]);
-    })
+    });
   }
 };
 

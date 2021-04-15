@@ -1,9 +1,7 @@
 import { AppBar, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import { useContext } from 'react';
 import { useLocation } from 'react-router';
 import '../App.css';
 import { DRAWER_WIDTH } from '../Constants';
-import UsuarioLogado from '../contexts/UsuarioLogado';
 import getPageTitle from '../services/PageTitleService';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Topbar() {
-
-    const { usuarioLogado } = useContext(UsuarioLogado);
-
     const classes = useStyles();
 
     const location = useLocation();

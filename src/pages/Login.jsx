@@ -1,19 +1,23 @@
 import { Button, TextField } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import UsuarioLogado from '../contexts/UsuarioLogado';
-import { UsuarioService } from '../services/UsuarioService';
+import UsuarioService from '../services/UsuarioService';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
+import MensagemContext from '../contexts/MensagemContext';
 import { useHistory } from "react-router-dom";
-import MensagemErro from '../contexts/MensagemErro';
 
 function Login() {
 
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
 
-    const { setUsuarioLogado } = useContext(UsuarioLogado);
-    const { setMensagemErro } = useContext(MensagemErro);
+    const { setUsuarioLogado } = useContext(UsuarioLogadoContext);
+    const { setMensagem } = useContext(MensagemContext);
 
     const history = useHistory();
+
+    function cadastrarUsuario() {
+        history.push("/cadastro-usuario");
+    }
 
     return (
         <form onSubmit={(event) => {
@@ -21,10 +25,11 @@ function Login() {
             UsuarioService.login({ usuario, senha })
                 .then(({ usuario, jwt }) => {
                     setUsuarioLogado(usuario);
-                    window.sessionStorage.setItem('jwt', jwt);
+                    localStorage.setItem('usuario', usuario);
+                    localStorage.setItem('jwt', jwt);
                     history.push("/");
                 })
-                .catch(erro => setMensagemErro(erro));
+                .catch(erro => setMensagem(erro));
         }}>
             <TextField
                 value={usuario}
@@ -60,7 +65,8 @@ function Login() {
 
             <Button
                 variant="contained"
-                color="default">
+                color="default"
+                onClick={cadastrarUsuario}>
                 Cadastrar Novo Usuário
             </Button>
         </form>

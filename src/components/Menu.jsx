@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { DRAWER_WIDTH } from '../Constants';
 import '../App.css';
 import { useContext } from 'react';
-import UsuarioLogado from '../contexts/UsuarioLogado';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 import blue from '@material-ui/core/colors/blue';
 import getPageTitle from '../services/PageTitleService';
 
@@ -34,14 +34,15 @@ const StyledListItem = withStyles({
 })(ListItem);
 
 function Menu() {
-
-    const { usuarioLogado, setUsuarioLogado } = useContext(UsuarioLogado);
+    const { usuarioLogado, setUsuarioLogado } = useContext(UsuarioLogadoContext);
 
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
 
     function logoff() {
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('jwt');
         setUsuarioLogado(null);
         history.push('/');
     }
@@ -74,9 +75,9 @@ function Menu() {
                 </ListItem>
 
                 {(usuarioLogado && [
-                    '/dashboard',
-                    '/cadastro-veiculo',
-                    '/cadastro-marca'
+                    '/marcas',
+                    '/usuarios',
+                    '/dashboard'
                 ].map(path => (
                     <ListItem button component={Link} to={path} key={getPageTitle(path)} selected={location.pathname === path}>
                         <ListItemText primary={getPageTitle(path)} />
