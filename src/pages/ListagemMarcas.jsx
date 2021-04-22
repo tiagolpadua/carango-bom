@@ -24,7 +24,7 @@ function ListagemMarcas() {
 
     useEffect(() => {
         MarcaService.listar()
-            .then(dados => setMarcas(dados))
+            .then(dados => setMarcas(dados));
     }, []);
 
     return (

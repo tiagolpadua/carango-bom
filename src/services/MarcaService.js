@@ -5,18 +5,8 @@ const MarcaService = {
     })
   },
   listar() {
-    return new Promise(resolve => {
-      resolve([
-        {
-          id: 1,
-          nome: "GM"
-        },
-        {
-          id: 2,
-          nome: "FIAT"
-        }
-      ]);
-    });
+    return fetch('http://localhost:8080/marcas')
+      .then(response => response.json());
   }
 };
 

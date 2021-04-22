@@ -20,6 +20,8 @@ import Pagina404 from './pages/Pagina404';
 import ListagemUsuarios from './pages/ListagemUsuarios';
 import ListagemMarcas from './pages/ListagemMarcas';
 
+console.log('>>>>>>>>>>>>>>>>>>> ' + process.env.NODE_ENV);
+
 const theme = createMuiTheme({
   palette: {
     primary: {
