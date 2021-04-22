@@ -5,9 +5,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Confirmacao from '../components/Confirmacao';
 import MensagemContext from '../contexts/MensagemContext';
-import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
+import CarregandoContext from '../contexts/CarregandoContext';
 import MarcaService from '../services/MarcaService';
 import VeiculoService from '../services/VeiculoService';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
 const colunas = [
     { field: 'marca', headerName: 'Marca', width: 200 },
@@ -39,6 +40,7 @@ function ListagemVeiculos() {
     const [openDialog, setOpenDialog] = React.useState(false);
     const { usuarioLogado } = useContext(UsuarioLogadoContext);
     const { setMensagem } = useContext(MensagemContext);
+    const { setCarregando } = useContext(CarregandoContext);
 
     function alterar() {
         history.push('/alteracao-veiculo/' + veiculoSelecionado.id);
@@ -54,17 +56,22 @@ function ListagemVeiculos() {
 
     function handleConfirmDialog() {
         setOpenDialog(false);
+        setCarregando(true);
         VeiculoService.excluir(veiculoSelecionado)
             .then(() => {
                 setVeiculoSelecionado(null);
                 carregarVeiculos();
                 setMensagem("Veículo excluído com sucesso!");
-            });
+            })
+            .finally(() => setCarregando(false));
     }
 
+    // TODO: Avaliar remover disable na próxima linha
+    // eslint-disable-next-line
     useEffect(() => carregarVeiculos(), []);
 
     function carregarVeiculos() {
+        setCarregando(true);
         MarcaService.listar()
             .then(marcas =>
                 VeiculoService.listar()
@@ -80,7 +87,8 @@ function ListagemVeiculos() {
                             })
                         )
                     )
-            );
+            )
+            .finally(() => setCarregando(false));
     }
 
     return (

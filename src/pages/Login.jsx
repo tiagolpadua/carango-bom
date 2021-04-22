@@ -1,9 +1,9 @@
 import { Button, TextField } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import UsuarioService from '../services/UsuarioService';
-import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 import MensagemContext from '../contexts/MensagemContext';
 import { useHistory } from "react-router-dom";
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
 function Login() {
 
@@ -29,7 +29,7 @@ function Login() {
                     localStorage.setItem('jwt', jwt);
                     history.push("/");
                 })
-                .catch(erro => setMensagem(erro));
+                .catch(erro => setMensagem(erro + ''))
         }}>
             <TextField
                 value={usuario}

@@ -5,8 +5,9 @@ import MarcaService from '../services/MarcaService';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from 'react-router';
 import Confirmacao from '../components/Confirmacao';
-import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 import MensagemContext from '../contexts/MensagemContext';
+import CarregandoContext from '../contexts/CarregandoContext';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
 const colunas = [
     { field: 'nome', headerName: 'Marca', width: 200 }
@@ -35,6 +36,7 @@ function ListagemMarcas() {
     const [openDialog, setOpenDialog] = useState(false);
     const { usuarioLogado } = useContext(UsuarioLogadoContext);
     const { setMensagem } = useContext(MensagemContext);
+    const { setCarregando } = useContext(CarregandoContext);
 
     function alterar() {
         history.push('/alteracao-marca/' + marcaSelecionada.id);
@@ -50,19 +52,23 @@ function ListagemMarcas() {
 
     function handleConfirmDialog() {
         setOpenDialog(false);
+        setCarregando(true);
         MarcaService.excluir(marcaSelecionada)
             .then(() => {
                 setMarcaSelecionada(null);
                 carregarMarcas();
                 setMensagem("Marca excluída com sucesso!");
-            });
+            })
+            .finally(() => setCarregando(false));
     }
 
     useEffect(() => carregarMarcas(), []);
 
     function carregarMarcas() {
+        setCarregando(true);
         MarcaService.listar()
-            .then(dados => setMarcas(dados));
+            .then(dados => setMarcas(dados))
+            .finally(() => setCarregando(false));
     }
 
     return (

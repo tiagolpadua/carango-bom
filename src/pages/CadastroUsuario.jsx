@@ -2,6 +2,7 @@ import { Button, TextField } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import MensagemContext from '../contexts/MensagemContext';
+import CarregandoContext from '../contexts/CarregandoContext';
 import useErros from '../hooks/useErros';
 import UsuarioService from '../services/UsuarioService';
 
@@ -10,6 +11,7 @@ function CadastroUsuario() {
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
     const [senhaConfirmacao, setSenhaConfirmacao] = useState("");
+    const { setCarregando } = useContext(CarregandoContext);
 
     const { setMensagem } = useContext(MensagemContext);
 
@@ -49,11 +51,13 @@ function CadastroUsuario() {
         <form onSubmit={(event) => {
             event.preventDefault();
             if (possoEnviar()) {
+                setCarregando(true);
                 UsuarioService.cadastrar({ usuario, senha })
                     .then(res => {
                         setMensagem(res);
                     })
-                    .catch(error => setMensagem(error));
+                    .catch(error => setMensagem(error))
+                    .finally(() => setCarregando(false));
             } else {
                 setMensagem('Formulário com erros...');
             }

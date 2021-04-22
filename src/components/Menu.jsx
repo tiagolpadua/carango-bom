@@ -3,9 +3,9 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { DRAWER_WIDTH } from '../Constants';
 import '../App.css';
 import { useContext } from 'react';
-import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 import blue from '@material-ui/core/colors/blue';
 import getPageTitle from '../services/PageTitleService';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {

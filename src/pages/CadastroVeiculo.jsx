@@ -5,6 +5,7 @@ import MensagemContext from '../contexts/MensagemContext';
 import useErros from '../hooks/useErros';
 import MarcaService from '../services/MarcaService';
 import VeiculoService from '../services/VeiculoService';
+import CarregandoContext from '../contexts/CarregandoContext';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -23,6 +24,7 @@ function CadastroVeiculo() {
     const [ano, setAno] = useState("");
     const [modelo, setModelo] = useState("");
     const [valor, setValor] = useState("");
+    const { setCarregando } = useContext(CarregandoContext);
 
     const history = useHistory();
 
@@ -63,17 +65,23 @@ function CadastroVeiculo() {
     }
 
     useEffect(() => {
-        id && VeiculoService.consultar(id)
-            .then(v => {
-                setMarca(v.marcaId);
-                setAno(v.ano);
-                setModelo(v.modelo);
-                setValor(v.valor);
-            });
+        if (id) {
+            setCarregando(true);
+            VeiculoService.consultar(id)
+                .then(v => {
+                    setMarca(v.marcaId);
+                    setAno(v.ano);
+                    setModelo(v.modelo);
+                    setValor(v.valor);
+                })
+                .finally(() => setCarregando(false));
+        }
 
+        setCarregando(true);
         MarcaService.listar()
-            .then(dados => setMarcas(dados));
-    }, [id]);
+            .then(dados => setMarcas(dados))
+            .finally(() => setCarregando(false));
+    }, [id, setCarregando]);
 
     const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
@@ -85,13 +93,15 @@ function CadastroVeiculo() {
         <form onSubmit={(event) => {
             event.preventDefault();
             if (possoEnviar()) {
+                setCarregando(true);
                 if (id) {
                     VeiculoService.alterar({ id: parseInt(id), marcaId: parseInt(marca), modelo, ano, valor })
                         .then(res => {
                             setMensagem('Veículo alterada com sucesso!');
                             history.goBack();
                         })
-                        .catch(error => setMensagem(error));
+                        .catch(error => setMensagem(error))
+                        .finally(() => setCarregando(false));
                 } else {
                     VeiculoService.cadastrar({ marcaId: marca, modelo, ano, valor })
                         .then(res => {
@@ -102,7 +112,8 @@ function CadastroVeiculo() {
                             setValor("");
                             history.goBack();
                         })
-                        .catch(error => setMensagem(error));
+                        .catch(error => setMensagem(error))
+                        .finally(() => setCarregando(false));
                 }
             } else {
                 setMensagem('Formulário com erros...');

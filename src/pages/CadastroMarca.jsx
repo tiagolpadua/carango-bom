@@ -2,6 +2,7 @@ import { Button, TextField } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import MensagemContext from '../contexts/MensagemContext';
+import CarregandoContext from '../contexts/CarregandoContext';
 import useErros from '../hooks/useErros';
 import MarcaService from '../services/MarcaService';
 
@@ -14,6 +15,7 @@ function CadastroMarca() {
     const { id } = useParams();
 
     const { setMensagem } = useContext(MensagemContext);
+    const { setCarregando } = useContext(CarregandoContext);
 
     const validacoes = {
         marca: dado => {
@@ -32,21 +34,27 @@ function CadastroMarca() {
     }
 
     useEffect(() => {
-        id && MarcaService.consultar(id)
-            .then(m => setMarca(m.nome));
-    }, [id]);
+        if (id) {
+            setCarregando(true);
+            MarcaService.consultar(id)
+                .then(m => setMarca(m.nome))
+                .finally(() => setCarregando(false));
+        }
+    }, [id, setCarregando]);
 
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             if (possoEnviar()) {
+                setCarregando(true);
                 if (id) {
                     MarcaService.alterar({ id, nome: marca })
                         .then(res => {
                             setMensagem('Marca alterada com sucesso: ' + res.nome);
                             history.goBack();
                         })
-                        .catch(error => setMensagem(error));
+                        .catch(error => setMensagem(error))
+                        .finally(() => setCarregando(false));
                 } else {
                     MarcaService.cadastrar({ nome: marca })
                         .then(res => {
@@ -54,7 +62,8 @@ function CadastroMarca() {
                             setMarca("");
                             history.goBack();
                         })
-                        .catch(error => setMensagem(error));
+                        .catch(error => setMensagem(error))
+                        .finally(() => setCarregando(false));
                 }
             } else {
                 setMensagem('Formulário com erros...');

@@ -1,6 +1,7 @@
 import { DataGrid } from '@material-ui/data-grid';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UsuarioService from '../services/UsuarioService';
+import CarregandoContext from '../contexts/CarregandoContext';
 
 const colunas = [
     { field: 'name', headerName: 'Nome', width: 200 }
@@ -9,11 +10,14 @@ const colunas = [
 
 function ListagemUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
+    const { setCarregando } = useContext(CarregandoContext);
 
     useEffect(() => {
+        setCarregando(true);
         UsuarioService.listar()
             .then(dados => setUsuarios(dados))
-    }, []);
+            .finally(() => setCarregando(false));
+    }, [setCarregando]);
 
     return (
         <div style={{ height: 300, width: '100%' }}>
