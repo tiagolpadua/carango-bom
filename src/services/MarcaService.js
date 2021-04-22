@@ -1,3 +1,5 @@
+import EnvService from "./EnvService";
+
 const MarcaService = {
   cadastrar(nome) {
     return new Promise(resolve => {
@@ -5,7 +7,7 @@ const MarcaService = {
     })
   },
   listar() {
-    return fetch('http://localhost:8080/marcas')
+    return fetch(EnvService.getAPIHost() + '/marcas')
       .then(response => response.json());
   }
 };
