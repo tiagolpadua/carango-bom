@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import MensagemContext from '../contexts/MensagemContext';
 import useErros from '../hooks/useErros';
 import MarcaService from '../services/MarcaService';
@@ -16,13 +16,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CadastroMarca() {
+function CadastroVeiculo() {
     const classes = useStyles();
     const [marcas, setMarcas] = useState([]);
     const [marca, setMarca] = useState("");
     const [ano, setAno] = useState("");
     const [modelo, setModelo] = useState("");
     const [valor, setValor] = useState("");
+
+    const history = useHistory();
+
+    const { id } = useParams();
 
     const { setMensagem } = useContext(MensagemContext);
 
@@ -59,13 +63,19 @@ function CadastroMarca() {
     }
 
     useEffect(() => {
+        id && VeiculoService.consultar(id)
+            .then(v => {
+                setMarca(v.marcaId);
+                setAno(v.ano);
+                setModelo(v.modelo);
+                setValor(v.valor);
+            });
+
         MarcaService.listar()
             .then(dados => setMarcas(dados));
-    }, []);
+    }, [id]);
 
     const [erros, validarCampos, possoEnviar] = useErros(validacoes);
-
-    const history = useHistory();
 
     function cancelar() {
         history.goBack();
@@ -75,15 +85,25 @@ function CadastroMarca() {
         <form onSubmit={(event) => {
             event.preventDefault();
             if (possoEnviar()) {
-                VeiculoService.cadastrar({ marca, modelo, ano, valor })
-                    .then(res => {
-                        setMensagem(res);
-                        setMarca("");
-                        setModelo("");
-                        setAno("");
-                        setValor("");
-                    })
-                    .catch(error => setMensagem(error));
+                if (id) {
+                    VeiculoService.alterar({ id: parseInt(id), marcaId: parseInt(marca), modelo, ano, valor })
+                        .then(res => {
+                            setMensagem('Veículo alterada com sucesso!');
+                            history.goBack();
+                        })
+                        .catch(error => setMensagem(error));
+                } else {
+                    VeiculoService.cadastrar({ marcaId: marca, modelo, ano, valor })
+                        .then(res => {
+                            setMensagem('Veículo cadastrado com sucesso: ' + res.nome);
+                            setMarca("");
+                            setModelo("");
+                            setAno("");
+                            setValor("");
+                            history.goBack();
+                        })
+                        .catch(error => setMensagem(error));
+                }
             } else {
                 setMensagem('Formulário com erros...');
             }
@@ -96,7 +116,7 @@ function CadastroMarca() {
                     value={marca}
                     onChange={evt => setMarca(evt.target.value)}
                 >
-                    {marcas && marcas.map(m => <MenuItem key={m.id} value={m.nome}>{m.nome}</MenuItem>)}
+                    {marcas && marcas.map(m => <MenuItem key={m.id} value={m.id}>{m.nome}</MenuItem>)}
                 </Select>
             </FormControl>
 
@@ -154,7 +174,7 @@ function CadastroMarca() {
                 type="submit"
                 disabled={!possoEnviar()}
             >
-                Cadastrar
+                {id ? 'Alterar' : 'Cadastrar'}
             </Button>
 
             <Button
@@ -167,4 +187,4 @@ function CadastroMarca() {
     );
 }
 
-export default CadastroMarca;
+export default CadastroVeiculo;

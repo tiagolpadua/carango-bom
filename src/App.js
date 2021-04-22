@@ -5,7 +5,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import ErrorMessage from './components/Message';
+import Message from './components/Message';
 import Menu from './components/Menu';
 import Topbar from './components/Topbar';
 import MensagemContext from './contexts/MensagemContext';
@@ -19,8 +19,6 @@ import Login from './pages/Login';
 import Pagina404 from './pages/Pagina404';
 import ListagemUsuarios from './pages/ListagemUsuarios';
 import ListagemMarcas from './pages/ListagemMarcas';
-
-console.log('>>>>>>>>>>>>>>>>>>> ' + process.env.NODE_ENV);
 
 const theme = createMuiTheme({
   palette: {
@@ -90,17 +88,23 @@ function App() {
                     <Route path="/cadastro-veiculo">
                       <CadastroVeiculo></CadastroVeiculo>
                     </Route>
+                    <Route path="/alteracao-veiculo/:id">
+                      <CadastroVeiculo></CadastroVeiculo>
+                    </Route>
                     <Route path="/marcas">
                       <ListagemMarcas></ListagemMarcas>
                     </Route>
                     <Route path="/cadastro-marca">
                       <CadastroMarca></CadastroMarca>
                     </Route>
+                    <Route path="/alteracao-marca/:id">
+                      <CadastroMarca></CadastroMarca>
+                    </Route>
                     <Route>
                       <Pagina404></Pagina404>
                     </Route>
                   </Switch>
-                  <ErrorMessage></ErrorMessage>
+                  <Message></Message>
                 </Container>
               </main>
             </div>

@@ -1,6 +1,6 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
 import MensagemContext from '../contexts/MensagemContext';
 import useErros from '../hooks/useErros';
 import MarcaService from '../services/MarcaService';
@@ -11,14 +11,16 @@ function CadastroMarca() {
 
     const history = useHistory();
 
+    const { id } = useParams();
+
     const { setMensagem } = useContext(MensagemContext);
 
     const validacoes = {
         marca: dado => {
-            if (dado && dado.length >= 5) {
+            if (dado && dado.length >= 3) {
                 return { valido: true };
             } else {
-                return { valido: false, texto: "Marca deve ter ao menos 5 letras." }
+                return { valido: false, texto: "Marca deve ter ao menos 3 letras." }
             }
         }
     }
@@ -29,16 +31,31 @@ function CadastroMarca() {
         history.goBack();
     }
 
+    useEffect(() => {
+        id && MarcaService.consultar(id)
+            .then(m => setMarca(m.nome));
+    }, [id]);
+
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             if (possoEnviar()) {
-                MarcaService.cadastrar({ marca })
-                    .then(res => {
-                        setMensagem(res);
-                        setMarca("");
-                    })
-                    .catch(error => setMensagem(error));
+                if (id) {
+                    MarcaService.alterar({ id, nome: marca })
+                        .then(res => {
+                            setMensagem('Marca alterada com sucesso: ' + res.nome);
+                            history.goBack();
+                        })
+                        .catch(error => setMensagem(error));
+                } else {
+                    MarcaService.cadastrar({ nome: marca })
+                        .then(res => {
+                            setMensagem('Marca cadastrada com sucesso: ' + res.nome);
+                            setMarca("");
+                            history.goBack();
+                        })
+                        .catch(error => setMensagem(error));
+                }
             } else {
                 setMensagem('Formulário com erros...');
             }
@@ -64,7 +81,7 @@ function CadastroMarca() {
                 color="primary"
                 type="submit"
                 disabled={!possoEnviar()}>
-                Cadastrar
+                {id ? 'Alterar' : 'Cadastrar'}
             </Button>
 
             <Button

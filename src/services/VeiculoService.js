@@ -1,3 +1,5 @@
+import EnvService from "./EnvService";
+
 const VeiculoService = {
   dashboard() {
     return new Promise(resolve => {
@@ -8,34 +10,43 @@ const VeiculoService = {
       ]);
     });
   },
-  cadastrar({ marca, modelo, ano, valor }) {
-    return new Promise(resolve => {
-      resolve('Veículo cadastrado com sucesso!');
-    });
-  },
-  listar() {
-    return new Promise(resolve => {
-      resolve([
-        {
-          id: 1,
-          marca: "GM",
-          modelo: "CORSA",
-          valor: 15000
-        },
-        {
-          id: 2,
-          marca: "FIAT",
-          modelo: "STRADA",
-          valor: 18000
-        },
-        {
-          id: 3,
-          marca: "HONDA",
-          modelo: "CIVIC",
-          valor: 25000
-        },
-      ]);
+
+  cadastrar(veiculo) {
+    return fetch(EnvService.getAPIHost() + '/veiculos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(veiculo)
     })
+      .then(response => response.json());
+  },
+
+  alterar(veiculo) {
+    return fetch(EnvService.getAPIHost() + '/veiculos/' + veiculo.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(veiculo)
+    })
+      .then(response => response.json());
+  },
+
+  consultar(id) {
+    return fetch(EnvService.getAPIHost() + '/veiculos/' + id)
+      .then(response => response.json());
+  },
+
+  listar() {
+    return fetch(EnvService.getAPIHost() + '/veiculos')
+      .then(response => response.json());
+  },
+
+  excluir(veiculo) {
+    return fetch(EnvService.getAPIHost() + '/veiculos/' + veiculo.id, {
+      method: 'DELETE'
+    });
   }
 };
 
