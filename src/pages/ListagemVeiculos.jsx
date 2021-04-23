@@ -75,9 +75,9 @@ function ListagemVeiculos() {
         MarcaService.listar()
             .then(marcas =>
                 VeiculoService.listar()
-                    .then(veiculos =>
+                    .then(veics =>
                         setVeiculos(
-                            veiculos.map(v => {
+                            veics.map(v => {
                                 const marca = marcas.find(m => m.id === v.marcaId);
                                 return {
                                     ...v,

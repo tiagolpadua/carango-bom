@@ -21,7 +21,7 @@ import ListagemMarcas from './pages/ListagemMarcas';
 import CarregandoContext from './contexts/CarregandoContext';
 import UsuarioLogadoContext from './contexts/UsuarioLogadoContext';
 
-const theme = createMuiTheme({
+const muiTheme = createMuiTheme({
   palette: {
     primary: {
       main: blue[900],
@@ -76,7 +76,7 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={muiTheme}>
       <UsuarioLogadoContext.Provider value={{ usuarioLogado, setUsuarioLogado }}>
         <MensagemContext.Provider value={{ mensagem, setMensagem }}>
           <CarregandoContext.Provider value={{ carregando, setCarregando }}>

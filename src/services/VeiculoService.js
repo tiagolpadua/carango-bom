@@ -2,13 +2,11 @@ import ServiceUtils from "./ServiceUtils";
 
 const VeiculoService = {
   dashboard() {
-    return new Promise(resolve => {
-      resolve([
-        { marca: 'GM', valor: "R$ 50.000,00" },
-        { marca: 'FIAT', valor: "R$ 15.000,00" },
-        { marca: 'RENAULT', valor: "R$ 8.000,00" },
-      ]);
-    });
+    return Promise.resolve([
+      { marca: 'GM', valor: "R$ 50.000,00" },
+      { marca: 'FIAT', valor: "R$ 15.000,00" },
+      { marca: 'RENAULT', valor: "R$ 8.000,00" },
+    ]);
   },
 
   cadastrar(veiculo) {

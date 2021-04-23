@@ -18,7 +18,7 @@ function Dashboard() {
 
     useEffect(() => {
         MarcaService.dashboard()
-            .then(dados => setDados(dados));
+            .then(resp => setDados(resp));
     }, []);
 
     return (
