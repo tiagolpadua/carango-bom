@@ -20,6 +20,16 @@ export default function Message() {
         setOpen(false);
     };
 
+    let msgSnack;
+
+    if (mensagem) {
+        if (Array.isArray(mensagem)) {
+            msgSnack = mensagem.reduce((res, msg) => `${res ? res + ' / ' : ''}${msg.parametro}: ${msg.mensagem}`, '');
+        } else {
+            msgSnack = mensagem + '';
+        }
+    }
+
     return (
         <Snackbar
             anchorOrigin={{
@@ -29,7 +39,7 @@ export default function Message() {
             open={open}
             autoHideDuration={6000}
             onClose={handleClose}
-            message={mensagem}
+            message={msgSnack}
             action={
                 <React.Fragment>
                     <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>

@@ -1,4 +1,4 @@
-import EnvService from "./EnvService";
+import ServiceUtils from "./ServiceUtils";
 
 const VeiculoService = {
   dashboard() {
@@ -12,41 +12,47 @@ const VeiculoService = {
   },
 
   cadastrar(veiculo) {
-    return fetch(EnvService.getAPIHost() + '/veiculos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(veiculo)
-    })
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/veiculos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(veiculo)
+      })
+    );
   },
 
   alterar(veiculo) {
-    return fetch(EnvService.getAPIHost() + '/veiculos/' + veiculo.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(veiculo)
-    })
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/veiculos/' + veiculo.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(veiculo)
+      })
+    );
   },
 
   consultar(id) {
-    return fetch(EnvService.getAPIHost() + '/veiculos/' + id)
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/veiculos/' + id)
+    );
   },
 
   listar() {
-    return fetch(EnvService.getAPIHost() + '/veiculos')
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/veiculos')
+    );
   },
 
   excluir(veiculo) {
-    return fetch(EnvService.getAPIHost() + '/veiculos/' + veiculo.id, {
-      method: 'DELETE'
-    });
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/veiculos/' + veiculo.id, {
+        method: 'DELETE'
+      })
+    );
   }
 };
 

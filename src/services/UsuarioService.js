@@ -1,3 +1,5 @@
+import ServiceUtils from "./ServiceUtils";
+
 const UsuarioService = {
   login({ usuario, senha }) {
     return new Promise((resolve, reject) => {
@@ -35,18 +37,29 @@ const UsuarioService = {
     //   });
   },
   cadastrar({ usuario, senha }) {
-    return new Promise((resolve, reject) => {
-      if (usuario === 'tiago' && senha === '11111') {
-        resolve('Usuário cadastrado com sucesso!');
-      } else {
-        reject('Erro ao cadastrar usuário');
-      }
-    });
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: usuario, password: senha })
+      })
+    );
   },
+
   listar() {
-    return new Promise((resolve, reject) => {
-      resolve([{ id: 1, name: 'tiago' }, { id: 2, name: 'bruno' }, { id: 3, name: 'paulo' }]);
-    });
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/usuarios')
+    );
+  },
+
+  excluir(usuario) {
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/usuarios/' + usuario.username, {
+        method: 'DELETE'
+      })
+    );
   }
 };
 

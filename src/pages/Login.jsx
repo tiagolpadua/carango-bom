@@ -4,6 +4,7 @@ import UsuarioService from '../services/UsuarioService';
 import MensagemContext from '../contexts/MensagemContext';
 import { useHistory } from "react-router-dom";
 import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
+import CarregandoContext from '../contexts/CarregandoContext';
 
 function Login() {
 
@@ -12,6 +13,7 @@ function Login() {
 
     const { setUsuarioLogado } = useContext(UsuarioLogadoContext);
     const { setMensagem } = useContext(MensagemContext);
+    const { setCarregando } = useContext(CarregandoContext);
 
     const history = useHistory();
 
@@ -22,6 +24,7 @@ function Login() {
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
+            setCarregando(true);
             UsuarioService.login({ usuario, senha })
                 .then(({ usuario, jwt }) => {
                     setUsuarioLogado(usuario);
@@ -29,7 +32,8 @@ function Login() {
                     localStorage.setItem('jwt', jwt);
                     history.push("/");
                 })
-                .catch(erro => setMensagem(erro + ''))
+                .catch(erro => setMensagem(erro))
+                .finally(() => setCarregando(false));
         }}>
             <TextField
                 value={usuario}

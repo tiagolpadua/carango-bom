@@ -53,8 +53,9 @@ function CadastroUsuario() {
             if (possoEnviar()) {
                 setCarregando(true);
                 UsuarioService.cadastrar({ usuario, senha })
-                    .then(res => {
-                        setMensagem(res);
+                    .then(() => {
+                        setMensagem('Usuário cadastrado com sucesso!');
+                        history.push('/login');
                     })
                     .catch(error => setMensagem(error))
                     .finally(() => setCarregando(false));

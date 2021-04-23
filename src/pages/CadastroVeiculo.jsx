@@ -104,8 +104,8 @@ function CadastroVeiculo() {
                         .finally(() => setCarregando(false));
                 } else {
                     VeiculoService.cadastrar({ marcaId: marca, modelo, ano, valor })
-                        .then(res => {
-                            setMensagem('Veículo cadastrado com sucesso: ' + res.nome);
+                        .then(() => {
+                            setMensagem('Veículo cadastrado com sucesso');
                             setMarca("");
                             setModelo("");
                             setAno("");

@@ -1,43 +1,48 @@
-import EnvService from "./EnvService";
+import ServiceUtils from "./ServiceUtils";
 
 const MarcaService = {
   cadastrar(marca) {
-    return fetch(EnvService.getAPIHost() + '/marcas', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(marca)
-    })
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/marcas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(marca)
+      })
+    );
   },
 
   alterar(marca) {
-    return fetch(EnvService.getAPIHost() + '/marcas/' + marca.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(marca)
-    })
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/marcas/' + marca.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(marca)
+      })
+    );
   },
 
   consultar(id) {
-    return fetch(EnvService.getAPIHost() + '/marcas/' + id)
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/marcas/' + id)
+    );
   },
 
   listar() {
-    return fetch(EnvService.getAPIHost() + '/marcas')
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/marcas')
+    );
   },
 
   excluir(marca) {
-    return fetch(EnvService.getAPIHost() + '/marcas/' + marca.id, {
-      method: 'DELETE'
-    })
-      .then(response => response.json());
+    return ServiceUtils.handleResponse(
+      fetch(ServiceUtils.getAPIHost() + '/marcas/' + marca.id, {
+        method: 'DELETE'
+      })
+    );
   }
 };
 
