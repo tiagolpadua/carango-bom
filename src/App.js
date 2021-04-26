@@ -3,7 +3,7 @@ import blue from '@material-ui/core/colors/blue';
 import { ptBR } from '@material-ui/core/locale';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import React, { useContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Message from './components/Message';
 import Menu from './components/Menu';
@@ -58,6 +58,16 @@ function Spinner() {
   )
 }
 
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route {...rest} render={() => {
+      return localStorage.getItem('dadosAutenticacao')
+        ? children
+        : <Redirect to='/login' />
+    }} />
+  )
+}
+
 function App() {
 
   const [usuarioLogado, setUsuarioLogado] = useState();
@@ -92,33 +102,33 @@ function App() {
                       <Route path="/login">
                         <Login></Login>
                       </Route>
-                      <Route path="/dashboard">
+                      <PrivateRoute path="/dashboard">
                         <Dashboard></Dashboard>
-                      </Route>
-                      <Route path="/usuarios">
+                      </PrivateRoute>
+                      <PrivateRoute path="/usuarios">
                         <ListagemUsuarios></ListagemUsuarios>
-                      </Route>
-                      <Route path="/cadastro-usuario">
+                      </PrivateRoute>
+                      <PrivateRoute path="/cadastro-usuario">
                         <CadastroUsuario></CadastroUsuario>
-                      </Route>
+                      </PrivateRoute>
                       <Route exact path="/">
                         <ListagemVeiculos></ListagemVeiculos>
                       </Route>
-                      <Route path="/cadastro-veiculo">
+                      <PrivateRoute path="/cadastro-veiculo">
                         <CadastroVeiculo></CadastroVeiculo>
-                      </Route>
-                      <Route path="/alteracao-veiculo/:id">
+                      </PrivateRoute>
+                      <PrivateRoute path="/alteracao-veiculo/:id">
                         <CadastroVeiculo></CadastroVeiculo>
-                      </Route>
-                      <Route path="/marcas">
+                      </PrivateRoute>
+                      <PrivateRoute path="/marcas">
                         <ListagemMarcas></ListagemMarcas>
-                      </Route>
-                      <Route path="/cadastro-marca">
+                      </PrivateRoute>
+                      <PrivateRoute path="/cadastro-marca">
                         <CadastroMarca></CadastroMarca>
-                      </Route>
-                      <Route path="/alteracao-marca/:id">
+                      </PrivateRoute>
+                      <PrivateRoute path='/alteracao-marca/:id'>
                         <CadastroMarca></CadastroMarca>
-                      </Route>
+                      </PrivateRoute>
                       <Route>
                         <Pagina404></Pagina404>
                       </Route>
