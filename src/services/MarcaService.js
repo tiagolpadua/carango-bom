@@ -6,7 +6,8 @@ const MarcaService = {
       fetch(ServiceUtils.getAPIHost() + '/marcas', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
         },
         body: JSON.stringify(marca)
       })
@@ -18,7 +19,8 @@ const MarcaService = {
       fetch(ServiceUtils.getAPIHost() + '/marcas/' + marca.id, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
         },
         body: JSON.stringify(marca)
       })
@@ -27,20 +29,34 @@ const MarcaService = {
 
   consultar(id) {
     return ServiceUtils.handleResponse(
-      fetch(ServiceUtils.getAPIHost() + '/marcas/' + id)
+      fetch(ServiceUtils.getAPIHost() + '/marcas/' + id, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
+        },
+      })
     );
   },
 
   listar() {
     return ServiceUtils.handleResponse(
-      fetch(ServiceUtils.getAPIHost() + '/marcas')
+      fetch(ServiceUtils.getAPIHost() + '/marcas', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
+        },
+      })
     );
   },
 
   excluir(marca) {
     return ServiceUtils.handleResponse(
       fetch(ServiceUtils.getAPIHost() + '/marcas/' + marca.id, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
+        },
       })
     );
   }

@@ -24,7 +24,7 @@ function CadastroUsuario() {
             }
         },
         senha: dado => {
-            if (dado && dado.length >= 5) {
+            if (dado && dado.length >= 6) {
                 return { valido: true };
             } else {
                 return { valido: false, texto: "Senha deve ter ao menos 5 letras." }
@@ -55,7 +55,7 @@ function CadastroUsuario() {
                 UsuarioService.cadastrar({ usuario, senha })
                     .then(() => {
                         setMensagem('Usuário cadastrado com sucesso!');
-                        history.push('/login');
+                        history.push('/usuarios');
                     })
                     .catch(error => setMensagem(error))
                     .finally(() => setCarregando(false));

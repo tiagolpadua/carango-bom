@@ -6,7 +6,6 @@ import { useHistory } from 'react-router';
 import Confirmacao from '../components/Confirmacao';
 import MensagemContext from '../contexts/MensagemContext';
 import CarregandoContext from '../contexts/CarregandoContext';
-import MarcaService from '../services/MarcaService';
 import VeiculoService from '../services/VeiculoService';
 import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
@@ -72,21 +71,17 @@ function ListagemVeiculos() {
 
     function carregarVeiculos() {
         setCarregando(true);
-        MarcaService.listar()
-            .then(marcas =>
-                VeiculoService.listar()
-                    .then(veics =>
-                        setVeiculos(
-                            veics.map(v => {
-                                const marca = marcas.find(m => m.id === v.marcaId);
-                                return {
-                                    ...v,
-                                    marca: marca && marca.nome,
-                                    valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-                                }
-                            })
-                        )
-                    )
+        VeiculoService.listar()
+            .then(veics =>
+                setVeiculos(
+                    veics.map(v => {
+                        return {
+                            ...v,
+                            marca: v.marca.nome,
+                            valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                        }
+                    })
+                )
             )
             .finally(() => setCarregando(false));
     }

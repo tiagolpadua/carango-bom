@@ -41,8 +41,7 @@ function Menu() {
     const location = useLocation();
 
     function logoff() {
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('jwt');
+        localStorage.removeItem('dadosAutenticacao');
         setUsuarioLogado(null);
         history.push('/');
     }
@@ -66,7 +65,7 @@ function Menu() {
                 }
                 {usuarioLogado &&
                     <StyledListItem >
-                        <ListItemText primary={usuarioLogado} />
+                        <ListItemText primary={usuarioLogado.username} />
                     </StyledListItem>
                 }
 

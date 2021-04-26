@@ -1,9 +1,12 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, Fab, makeStyles } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
+import AddIcon from '@material-ui/icons/Add';
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Confirmacao from '../components/Confirmacao';
 import CarregandoContext from '../contexts/CarregandoContext';
 import MensagemContext from '../contexts/MensagemContext';
+import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 import UsuarioService from '../services/UsuarioService';
 
 const colunas = [
@@ -28,7 +31,9 @@ const useStyles = makeStyles(() => ({
 function ListagemUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
     const [usuarioSelecionado, setUsuarioSelecionado] = useState();
+    const { usuarioLogado } = useContext(UsuarioLogadoContext);
     const classes = useStyles();
+    const history = useHistory();
     const [openDialog, setOpenDialog] = useState(false);
     const { setMensagem } = useContext(MensagemContext);
     const { setCarregando } = useContext(CarregandoContext);
@@ -80,6 +85,10 @@ function ListagemUsuarios() {
                     Excluir
                 </Button>
             </div>
+
+            { usuarioLogado.perfis.find(p => p === 'ADMIN') && <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/cadastro-usuario')}>
+                <AddIcon />
+            </Fab>}
 
             <Confirmacao
                 open={openDialog}

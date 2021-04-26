@@ -14,7 +14,8 @@ const VeiculoService = {
       fetch(ServiceUtils.getAPIHost() + '/veiculos', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
         },
         body: JSON.stringify(veiculo)
       })
@@ -26,7 +27,8 @@ const VeiculoService = {
       fetch(ServiceUtils.getAPIHost() + '/veiculos/' + veiculo.id, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
         },
         body: JSON.stringify(veiculo)
       })
@@ -48,7 +50,10 @@ const VeiculoService = {
   excluir(veiculo) {
     return ServiceUtils.handleResponse(
       fetch(ServiceUtils.getAPIHost() + '/veiculos/' + veiculo.id, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
+        },
       })
     );
   }

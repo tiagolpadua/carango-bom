@@ -67,11 +67,9 @@ function App() {
   const classes = useStyles();
 
   useEffect(() => {
-    const usuario = localStorage.getItem('usuario');
-    const jwt = localStorage.getItem('jwt');
-
-    if (usuario && jwt) {
-      setUsuarioLogado(usuario);
+    const dadosAutenticacaoString = localStorage.getItem('dadosAutenticacao');
+    if (dadosAutenticacaoString) {
+      setUsuarioLogado(JSON.parse(dadosAutenticacaoString).usuario);
     }
   }, []);
 

@@ -17,22 +17,16 @@ function Login() {
 
     const history = useHistory();
 
-    function cadastrarUsuario() {
-        history.push("/cadastro-usuario");
-    }
-
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             setCarregando(true);
             UsuarioService.login({ usuario, senha })
-                .then(({ usuario, jwt }) => {
-                    setUsuarioLogado(usuario);
-                    localStorage.setItem('usuario', usuario);
-                    localStorage.setItem('jwt', jwt);
+                .then((usuarioLogado) => {
+                    setUsuarioLogado(usuarioLogado);
                     history.push("/");
                 })
-                .catch(erro => setMensagem(erro))
+                .catch(() => setMensagem('Usuário ou senha inválidos.'))
                 .finally(() => setCarregando(false));
         }}>
             <TextField
@@ -67,12 +61,12 @@ function Login() {
                 Entrar
             </Button>
 
-            <Button
+            {/* <Button
                 variant="contained"
                 color="default"
                 onClick={cadastrarUsuario}>
                 Cadastrar Novo Usuário
-            </Button>
+            </Button> */}
         </form>
     );
 }
