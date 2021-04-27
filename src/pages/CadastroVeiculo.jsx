@@ -64,6 +64,7 @@ function CadastroVeiculo() {
         }
     }
 
+    // TODO: Avaliar remover disable na próxima linha
     useEffect(() => {
         if (id) {
             setCarregando(true);
@@ -74,6 +75,7 @@ function CadastroVeiculo() {
                     setModelo(v.modelo);
                     setValor(v.valor);
                 })
+                .catch(() => history.push('/404'))
                 .finally(() => setCarregando(false));
         }
 
@@ -81,7 +83,7 @@ function CadastroVeiculo() {
         MarcaService.listar()
             .then(dados => setMarcas(dados))
             .finally(() => setCarregando(false));
-    }, [id, setCarregando]);
+    }, [id]); // eslint-disable-line
 
     const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 

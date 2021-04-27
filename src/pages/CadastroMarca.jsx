@@ -33,14 +33,16 @@ function CadastroMarca() {
         history.goBack();
     }
 
+    // TODO: Avaliar remover disable na próxima linha
     useEffect(() => {
         if (id) {
             setCarregando(true);
             MarcaService.consultar(id)
                 .then(m => setMarca(m.nome))
+                .catch(() => history.push('/404'))
                 .finally(() => setCarregando(false));
         }
-    }, [id, setCarregando]);
+    }, [id]); // eslint-disable-line
 
     return (
         <form onSubmit={(event) => {
