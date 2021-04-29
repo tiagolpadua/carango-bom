@@ -74,13 +74,13 @@ function ListagemVeiculos() {
         VeiculoService.listar()
             .then(veics =>
                 setVeiculos(
-                    veics.map(v => {
-                        return {
+                    veics.map(v => (
+                        {
                             ...v,
                             marca: v.marca.nome,
                             valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-                        }
-                    })
+                        })
+                    )
                 )
             )
             .finally(() => setCarregando(false));

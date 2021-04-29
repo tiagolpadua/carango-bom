@@ -37,8 +37,6 @@ const ServiceUtils = {
 
     getJWT() {
         const dadosAutenticacao = JSON.parse(localStorage.getItem('dadosAutenticacao'));
-        console.log('getJWT');
-        console.log(dadosAutenticacao);
         return dadosAutenticacao.token;
     }
 }

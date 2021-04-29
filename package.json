@@ -19,9 +19,9 @@
   },
   "scripts": {
     "start": "serve -p $PORT -s build",
-    "start:dev": "react-scripts start",
+    "develop": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --collect-coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

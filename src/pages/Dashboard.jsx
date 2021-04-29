@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import MarcaService from '../services/VeiculoService';
+import DashboardService from '../services/DashboardService';
 
 const useStyles = makeStyles({
     root: {
@@ -17,19 +17,29 @@ function Dashboard() {
     const [dados, setDados] = useState([]);
 
     useEffect(() => {
-        MarcaService.dashboard()
-            .then(resp => setDados(resp));
+        DashboardService.listar()
+            .then(dados => {
+                setDados(dados.map(d => (
+                    {
+                        ...d,
+                        valor: d.montante.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                    })
+                ));
+            });
     }, []);
 
     return (
         dados.map((dado, index) =>
             <Card key={index} className={classes.root}>
                 <CardHeader
-                    title={dado.marca}
+                    title={dado.nomeDaMarca}
                 />
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {dado.valor}
+                    <Typography variant="body1" color="textPrimary" component="p">
+                        Quantidade: {dado.quantidadeDeVeiculos}
+                    </Typography>
+                    <Typography variant="body1" color="textPrimary" component="p">
+                        Valor: {dado.valor}
                     </Typography>
                 </CardContent>
             </Card>
