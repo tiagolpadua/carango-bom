@@ -6,14 +6,12 @@ describe('Componente Confirmação', () => {
     const noop = () => { };
 
     render(
-      <Confirmacao open={noop}
+      <Confirmacao open={true}
         onClose={noop}
         onConfirm={noop}
         title='Excluir Veículo'
         content='Confirma a exclusão?' />
     );
-
-    // screen.debug();
 
     expect(screen.getByText(/Confirma a exclusão?/i))
       .toBeInTheDocument();

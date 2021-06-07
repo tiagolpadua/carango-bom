@@ -22,8 +22,6 @@ describe('Componente principal', () => {
       </MemoryRouter>
     );
 
-    // screen.debug();
-
     expect(screen.getByText(/Veículos - Carango Bom/i))
       .toBeInTheDocument();
 
