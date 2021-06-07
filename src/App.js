@@ -3,7 +3,7 @@ import blue from '@material-ui/core/colors/blue';
 import { ptBR } from '@material-ui/core/locale';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import React, { useContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Message from './components/Message';
 import Menu from './components/Menu';
@@ -88,56 +88,54 @@ function App() {
       <UsuarioLogadoContext.Provider value={{ usuarioLogado, setUsuarioLogado }}>
         <MensagemContext.Provider value={{ mensagem, setMensagem }}>
           <CarregandoContext.Provider value={{ carregando, setCarregando }}>
-            <Router>
-              <div className={classes.root}>
-                <CssBaseline />
-                <Spinner />
-                <Topbar></Topbar>
-                <Menu></Menu>
-                <main className={classes.content}>
-                  <div className={classes.toolbar} />
-                  <Container component="article" maxWidth="md">
+            <div className={classes.root}>
+              <CssBaseline />
+              <Spinner />
+              <Topbar></Topbar>
+              <Menu></Menu>
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Container component="article" maxWidth="md">
 
-                    <Switch>
-                      <Route path="/login">
-                        <Login></Login>
-                      </Route>
-                      <PrivateRoute path="/dashboard">
-                        <Dashboard></Dashboard>
-                      </PrivateRoute>
-                      <PrivateRoute path="/usuarios">
-                        <ListagemUsuarios></ListagemUsuarios>
-                      </PrivateRoute>
-                      <PrivateRoute path="/cadastro-usuario">
-                        <CadastroUsuario></CadastroUsuario>
-                      </PrivateRoute>
-                      <Route exact path="/">
-                        <ListagemVeiculos></ListagemVeiculos>
-                      </Route>
-                      <PrivateRoute path="/cadastro-veiculo">
-                        <CadastroVeiculo></CadastroVeiculo>
-                      </PrivateRoute>
-                      <PrivateRoute path="/alteracao-veiculo/:id">
-                        <CadastroVeiculo></CadastroVeiculo>
-                      </PrivateRoute>
-                      <PrivateRoute path="/marcas">
-                        <ListagemMarcas></ListagemMarcas>
-                      </PrivateRoute>
-                      <PrivateRoute path="/cadastro-marca">
-                        <CadastroMarca></CadastroMarca>
-                      </PrivateRoute>
-                      <PrivateRoute path='/alteracao-marca/:id'>
-                        <CadastroMarca></CadastroMarca>
-                      </PrivateRoute>
-                      <Route>
-                        <Pagina404></Pagina404>
-                      </Route>
-                    </Switch>
-                    <Message></Message>
-                  </Container>
-                </main>
-              </div>
-            </Router>
+                  <Switch>
+                    <Route path="/login">
+                      <Login></Login>
+                    </Route>
+                    <PrivateRoute path="/dashboard">
+                      <Dashboard></Dashboard>
+                    </PrivateRoute>
+                    <PrivateRoute path="/usuarios">
+                      <ListagemUsuarios></ListagemUsuarios>
+                    </PrivateRoute>
+                    <PrivateRoute path="/cadastro-usuario">
+                      <CadastroUsuario></CadastroUsuario>
+                    </PrivateRoute>
+                    <Route exact path="/">
+                      <ListagemVeiculos></ListagemVeiculos>
+                    </Route>
+                    <PrivateRoute path="/cadastro-veiculo">
+                      <CadastroVeiculo></CadastroVeiculo>
+                    </PrivateRoute>
+                    <PrivateRoute path="/alteracao-veiculo/:id">
+                      <CadastroVeiculo></CadastroVeiculo>
+                    </PrivateRoute>
+                    <PrivateRoute path="/marcas">
+                      <ListagemMarcas></ListagemMarcas>
+                    </PrivateRoute>
+                    <PrivateRoute path="/cadastro-marca">
+                      <CadastroMarca></CadastroMarca>
+                    </PrivateRoute>
+                    <PrivateRoute path='/alteracao-marca/:id'>
+                      <CadastroMarca></CadastroMarca>
+                    </PrivateRoute>
+                    <Route>
+                      <Pagina404></Pagina404>
+                    </Route>
+                  </Switch>
+                  <Message></Message>
+                </Container>
+              </main>
+            </div>
           </CarregandoContext.Provider>
         </MensagemContext.Provider>
       </UsuarioLogadoContext.Provider>
