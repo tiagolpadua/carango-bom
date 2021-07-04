@@ -7,6 +7,7 @@ import Confirmacao from '../components/Confirmacao';
 import MensagemContext from '../contexts/MensagemContext';
 import CarregandoContext from '../contexts/CarregandoContext';
 import VeiculoService from '../services/VeiculoService';
+import MarcaService from '../services/MarcaService';
 import UsuarioLogadoContext from '../contexts/UsuarioLogadoContext';
 
 const colunas = [
@@ -71,17 +72,21 @@ function ListagemVeiculos() {
 
     function carregarVeiculos() {
         setCarregando(true);
-        VeiculoService.listar()
-            .then(veics =>
-                setVeiculos(
-                    veics.map(v => (
-                        {
-                            ...v,
-                            marca: v.marca.nome,
-                            valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-                        })
-                    )
-                )
+        MarcaService.listar()
+            .then(marcas =>
+                VeiculoService.listar()
+                    .then(veics => {
+                        setVeiculos(
+                            veics.map(v => (
+                                {
+                                    ...v,
+                                    marca: marcas.find(m => m.id === v.marcaId)?.nome,
+                                    valor: v.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                                })
+                            )
+                        );
+                    })
+                    .finally(() => setCarregando(false))
             )
             .finally(() => setCarregando(false));
     }

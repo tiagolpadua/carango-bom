@@ -27,12 +27,7 @@ const ServiceUtils = {
     },
 
     getAPIHost() {
-        if (process.env.NODE_ENV === 'development') {
-            // return 'http://localhost:8080';
-            return 'https://carango-bom-api.herokuapp.com';
-        } else {
-            return 'https://carango-bom-api.herokuapp.com';
-        }
+        return 'https://my-json-server.typicode.com/levelup-rchlo/carango-bom-api-fake';
     },
 
     getJWT() {

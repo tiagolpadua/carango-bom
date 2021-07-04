@@ -40,12 +40,7 @@ const MarcaService = {
 
   listar() {
     return ServiceUtils.handleResponse(
-      fetch(ServiceUtils.getAPIHost() + '/marcas', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + ServiceUtils.getJWT()
-        },
-      })
+      fetch(ServiceUtils.getAPIHost() + '/marcas')
     );
   },
 

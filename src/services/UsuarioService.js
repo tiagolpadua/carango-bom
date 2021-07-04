@@ -2,18 +2,34 @@ import ServiceUtils from "./ServiceUtils";
 
 const UsuarioService = {
   login({ usuario, senha }) {
-    return ServiceUtils.handleResponse(
-      fetch(ServiceUtils.getAPIHost() + '/autenticacao', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username: usuario, password: senha })
-      })
-    ).then(dadosAutenticacao => {
-      localStorage.setItem('dadosAutenticacao', JSON.stringify(dadosAutenticacao));
-      return dadosAutenticacao.usuario;
-    });
+    // return ServiceUtils.handleResponse(
+    //   Promise.resolve({
+    //     "usuario":
+    //     {
+    //       "username": "admin",
+    //       "perfis": ["ADMIN"]
+    //     }, "token": "foobar"
+    //   })
+    //   fetch(ServiceUtils.getAPIHost() + '/autenticacao', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ username: usuario, password: senha })
+    //   })
+    // )
+
+    return Promise.resolve({
+      "usuario":
+      {
+        "username": "admin",
+        "perfis": ["ADMIN"]
+      }, "token": "foobar"
+    })
+      .then(dadosAutenticacao => {
+        localStorage.setItem('dadosAutenticacao', JSON.stringify(dadosAutenticacao));
+        return dadosAutenticacao.usuario;
+      });
   },
 
   cadastrar({ usuario, senha }) {
