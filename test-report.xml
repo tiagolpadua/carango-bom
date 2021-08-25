@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Caelum\tw\carango-bom\src\services\ServiceUtils.test.js">
-    <testCase name="Utilitário Service Utils Deve resolver o valor quando content length &gt; 0" duration="3"/>
-    <testCase name="Utilitário Service Utils Deve resolver vazio content length === 0" duration="0"/>
-    <testCase name="Utilitário Service Utils Deve rejeitar com error" duration="1"/>
-    <testCase name="Utilitário Service Utils Deve rejeitar com erros" duration="0"/>
-    <testCase name="Utilitário Service Utils Deve rejeitar quando dá erro" duration="1"/>
-    <testCase name="Utilitário Service Utils Deve retornar o host de api" duration="0"/>
-    <testCase name="Utilitário Service Utils Deve retornar o jwt" duration="1"/>
+    <testCase name="Utilitário Service Utils Deve resolver o valor quando content length &gt; 0" duration="2"/>
+    <testCase name="Utilitário Service Utils Deve resolver vazio content length === 0" duration="2"/>
+    <testCase name="Utilitário Service Utils Deve rejeitar com error" duration="2"/>
+    <testCase name="Utilitário Service Utils Deve rejeitar com erros" duration="1"/>
+    <testCase name="Utilitário Service Utils Deve rejeitar quando dá erro" duration="0"/>
+    <testCase name="Utilitário Service Utils Deve retornar o host de api" duration="1"/>
+    <testCase name="Utilitário Service Utils Deve retornar o jwt" duration="0"/>
   </file>
   <file path="C:\Caelum\tw\carango-bom\src\services\VeiculoService.test.js">
-    <testCase name="Service VeiculoService Deve retornar o dashboard" duration="2"/>
-    <testCase name="Service VeiculoService Deve cadastrar um veículo" duration="32"/>
-    <testCase name="Service VeiculoService Deve alterar um veículo" duration="4"/>
+    <testCase name="Service VeiculoService Deve retornar o dashboard" duration="1"/>
+    <testCase name="Service VeiculoService Deve cadastrar um veículo" duration="37"/>
+    <testCase name="Service VeiculoService Deve alterar um veículo" duration="5"/>
     <testCase name="Service VeiculoService Deve consultar um veículo" duration="3"/>
     <testCase name="Service VeiculoService Deve listar veículos" duration="2"/>
     <testCase name="Service VeiculoService Deve excluir um veículo" duration="2"/>
   </file>
   <file path="C:\Caelum\tw\carango-bom\src\components\Message.test.js">
-    <testCase name="Componente Message Deve renderizar Olá" duration="77"/>
-    <testCase name="Componente Message Deve renderizar duas mensagens" duration="28"/>
+    <testCase name="Componente Message Deve renderizar Olá" duration="75"/>
+    <testCase name="Componente Message Deve renderizar duas mensagens" duration="26"/>
     <testCase name="Componente Message Deve fechar" duration="78"/>
   </file>
   <file path="C:\Caelum\tw\carango-bom\src\components\Confirmacao.test.js">
     <testCase name="Componente Confirmação Deve renderizar o componente" duration="119"/>
   </file>
   <file path="C:\Caelum\tw\carango-bom\src\components\Menu.test.js">
-    <testCase name="Componente Menu Deve renderizar" duration="95"/>
-    <testCase name="Componente Menu Deve fazer logoff" duration="62"/>
+    <testCase name="Componente Menu Deve renderizar" duration="93"/>
+    <testCase name="Componente Menu Deve fazer logoff" duration="63"/>
   </file>
   <file path="C:\Caelum\tw\carango-bom\src\App.test.js">
-    <testCase name="Componente principal Deve renderizar o título" duration="112"/>
-    <testCase name="Componente principal Deve exibir nome do usuário quando estiver logado" duration="63"/>
-    <testCase name="Componente principal Deve exibir erro 404 para página inválida" duration="61"/>
-    <testCase name="Componente principal Deve exibir a listagem de usuários quando estiver logado e acessar a rota" duration="56"/>
-    <testCase name="Componente principal Deve redirecionar para o login se tentar acessar rota que exige autenticação" duration="40"/>
+    <testCase name="Componente principal Deve renderizar o título" duration="111"/>
+    <testCase name="Componente principal Deve exibir nome do usuário quando estiver logado" duration="61"/>
+    <testCase name="Componente principal Deve exibir erro 404 para página inválida" duration="62"/>
+    <testCase name="Componente principal Deve exibir a listagem de usuários quando estiver logado e acessar a rota" duration="55"/>
+    <testCase name="Componente principal Deve redirecionar para o login se tentar acessar rota que exige autenticação" duration="39"/>
   </file>
 </testExecutions>
