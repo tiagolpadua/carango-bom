@@ -21,7 +21,7 @@
     "develop": "react-scripts start",
     "build": "react-scripts build",
     "testx": "npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
-    "test": "react-scripts test --coverage --watchAll=false --testResultsProcessor=jest-sonar-reporter",
+    "test": "CI=true react-scripts test --coverage --watchAll=false --testResultsProcessor=jest-sonar-reporter",
     "test:dev": "react-scripts test",
     "eject": "react-scripts eject",
     "sonar-scanner": "sonar-scanner"
