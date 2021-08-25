@@ -20,11 +20,10 @@
     "start": "serve -p $PORT -s build",
     "develop": "react-scripts start",
     "build": "react-scripts build",
-    "testx": "npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
-    "test": "react-scripts test --coverage --watchAll=false --testResultsProcessor=jest-sonar-reporter",
+    "test": "react-scripts test --coverage --watchAll=false",
+    "test:ci": "react-scripts test --coverage --watchAll=false --testResultsProcessor ./node_modules/jest-sonar-reporter",
     "test:dev": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sonar-scanner": "sonar-scanner"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
