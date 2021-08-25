@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-test-reports.xml
+test-report.xml
 
 # production
 /build
